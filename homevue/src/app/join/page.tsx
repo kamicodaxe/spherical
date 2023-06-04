@@ -1,5 +1,7 @@
 'use client';
 
+import Link from "next/link";
+
 
 export default function Join() {
   return (
@@ -7,7 +9,9 @@ export default function Join() {
       <div className="grid max-w-screen-xl grid-cols-1 gap-8 w-full mx-2 px-2 py-16 rounded-lg md:grid-cols-2 md:px-12 lg:px-16 bg-gray-800 text-gray-100">
         <div className="flex flex-col justify-between">
           <div className="space-y-2">
-            <img src="/images/logo.jpg" className=" w-32 h-32" alt="" />
+            <Link href="/">
+              <img src="/images/logo.jpg" className="w-32 h-32 cursor-pointer" alt="" />
+            </Link>
             <h2 className="text-4xl font-bold leading-loose pb-4 lg:text-5xl">Join Spherical 3D!</h2>
             <div className="text-gray-200">
               Join our waiting list to participate in our journey and get a reward when we launch.
