@@ -1,11 +1,12 @@
 'use client';
-import Scene from '@/components/Scene';
+import Viewer from '@/components/Viewer';
+// import Scene from '@/components/Scene';
 
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen">
-      <Scene />
+    <main className="w-full min-h-screen">
+      <Viewer />
     </main>
   )
 }
