@@ -1,17 +1,10 @@
 'use client';
 import 'pannellum';
+import 'pannellum/build/pannellum.css';
 import React, { useEffect, useRef } from 'react';
-
-interface Hotspot {
-    pitch: number;
-    yaw: number;
-    cssClass: string;
-    handleClick: () => void;
-}
 
 interface PanoramaViewerProps {
     imagePath: string;
-    hotspots?: Hotspot[];
 }
 
 const PanoramaViewer: React.FC<PanoramaViewerProps> = ({ imagePath }) => {
@@ -20,7 +13,7 @@ const PanoramaViewer: React.FC<PanoramaViewerProps> = ({ imagePath }) => {
     useEffect(() => {
         let viewer: pannellum.viewer | null = null;
 
-        // Initializing the Pannellum viewer
+        // Initialize the Pannellum viewer
         if (viewerRef.current) {
             viewer = pannellum.viewer(viewerRef.current, {
                 type: 'equirectangular',
@@ -39,20 +32,7 @@ const PanoramaViewer: React.FC<PanoramaViewerProps> = ({ imagePath }) => {
         };
     }, [imagePath]);
 
-    const handleFullscreen = () => {
-        if (viewerRef.current) {
-            if (viewerRef.current.requestFullscreen) {
-                viewerRef.current.requestFullscreen();
-            }
-        }
-    };
-
-    return (
-        <>
-            <div ref={viewerRef}  />
-            {/* <button onClick={handleFullscreen} >Go Fullscreen</button> */}
-        </>
-    );
+    return <div ref={viewerRef} style={{ width: '100%', height: '100%' }} />;
 };
 
 export default PanoramaViewer;

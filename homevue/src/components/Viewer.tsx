@@ -10,7 +10,7 @@ export default function Viewer() {
     }, [])
 
     return (
-        <div className="relative w-screen h-screen">
+        <div className="relative w-screen h-screen bg-fuchsia-200">
             <PanoramaViewer imagePath={image} />
         </div>
     );
