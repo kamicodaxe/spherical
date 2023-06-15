@@ -1,7 +1,6 @@
 'use client';
 import Link from "next/link";
 import { useState } from "react";
-import PannellumImage from "./PannellumImage";
 
 const IMAGES = [
     {
@@ -48,10 +47,6 @@ const Scene = () => {
                 </Link>
 
             </div>
-
-            {
-                selectedImage.map(imageUri => <PannellumImage key={imageUri} imageSrc={imageUri} />)
-            }
 
             <div className="flex justify-center items-center absolute space-x-2 mb-4 bottom-0 left-0 right-0 pointer-events-none">
                 {
