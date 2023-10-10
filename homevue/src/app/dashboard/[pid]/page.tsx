@@ -1,8 +1,9 @@
 import connect from "@/lib/connect";
 import { Project, User } from "@/lib/models";
-import { Plus, Dot, GalleryThumbnails, MoreVertical } from "lucide-react"
+import { Plus, Dot, GalleryThumbnails, MoreVertical, ArrowRight, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { ImageAction } from "./components/image-action";
+import { IProject } from "@/lib/models/Project";
 
 
 const AddOrDropPano = () => (
@@ -21,6 +22,7 @@ interface ProjectProps {
 export default async function ProjectPage({ params: { pid } }: ProjectProps) {
 	await connect()
 	const user = await User.findOne({ email: "lkami@bogital.com" });
+	// project passed from server component should not contain methods
 	const project = await Project.findOne({ ownerId: user.id, _id: pid })
 
 	// Get Panoramas from pid(Project ID)
@@ -52,10 +54,14 @@ export default async function ProjectPage({ params: { pid } }: ProjectProps) {
 
 			<div className="md:max-w-5xl h-full mx-auto">
 				<div className="flex-1 py-4 space-y-8">
-					<h2 className="text-5xl font-semibold"> {project.name} </h2>
+					<div className="flex items-center text-3xl font-semibold space-x-2">
+						<Link href={"/dashboard"} className="hover:text-sky-500 border-b-2 border-transparent hover:border-sky-500 transition-colors duration-300"> Dashboard </Link>
+						<ChevronRight />
+						<span className="text-sky-500"> {project.name} </span>
+					</div>
 
 					<div className="w-full">
-						<h3 className="text-3xl font-semibold mb-4">Tag 01</h3>
+						<h3 className="text-xl font-semibold mb-4">Tag 01</h3>
 						<section className="">
 							<div className="container flex flex-col justify-center px-0 mx-auto">
 								<div className="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
@@ -81,7 +87,7 @@ export default async function ProjectPage({ params: { pid } }: ProjectProps) {
 					</div>
 
 					<div className="w-full">
-						<h3 className="text-3xl font-semibold mb-4">Tag 02</h3>
+						<h3 className="text-xl font-semibold mb-4">Tag 02</h3>
 						<section className="">
 							<div className="container flex flex-col justify-center px-0 mx-auto">
 								<div className="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
