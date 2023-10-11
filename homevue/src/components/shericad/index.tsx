@@ -1,16 +1,12 @@
 "use client"
 import { IProject } from "@/lib/models/Project"
 import { IUser } from "@/lib/models/User"
-import { useEffect, useMemo, useState } from "react"
-import { HotspotProps } from "./types"
-import dynamic from "next/dynamic"
+import { useEffect, useState } from "react"
 import { ToolsPanel } from "./tools-panel"
 import { useAtom } from "jotai"
-import { readOnlyToolsPanelHeightAtom } from "./atoms"
-
-const DynamicPanoramaViewer = dynamic(() => import('react-pannellum-next').then(c => c.PanoramaViewer), {
-	ssr: false, // Disable server-side rendering for this component
-});
+import { readOnlyToolsPanelHeightAtom, toggleHotspotAtom } from "./atoms"
+import DotRing from "./components/dot-ring"
+import PanoramaViewer, { HotspotProps } from "react-pannellum-next"
 
 interface ShericadProps {
 	user: IUser
@@ -25,7 +21,9 @@ export const Shericad: React.FC<ShericadProps> = ({
 }) => {
 	console.log("pid: ", project.id)
 	console.log("user: ", user.firstName)
-	const height = window.innerHeight - useAtom(readOnlyToolsPanelHeightAtom)[0]
+	const height = useAtom(readOnlyToolsPanelHeightAtom)[0]
+	const [selectHotsport, setSelectHotsport] = useAtom(toggleHotspotAtom)
+
 	const [image, setImage] = useState('/images/milan.jpg')
 	const [hotSpots, sethotSpots] = useState<HotspotProps[]>([
 		{
@@ -62,11 +60,12 @@ export const Shericad: React.FC<ShericadProps> = ({
 
 	return (
 		<>
+			{selectHotsport && <DotRing />}
 			<ToolsPanel user={user as IUser} project={project} panoId={panoId} />
 			<div
 				className="w-full h-screen"
 			>
-				<DynamicPanoramaViewer
+				<PanoramaViewer
 					autoLoad
 					autoRotate={-2}
 					imagePath={image}

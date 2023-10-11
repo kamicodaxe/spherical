@@ -4,9 +4,10 @@ import { ChevronDown, ChevronUp, Save } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
-import { toolsPanelHeightAtom } from "./atoms"
+import { toggleHotspotAtom, toolsPanelHeightAtom } from "./atoms"
 import { useRef, useState } from "react"
 import clsx from "clsx"
+import DotRing from "./components/dot-ring"
 
 
 
@@ -24,6 +25,8 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
 	const [_, setHeight] = useAtom(toolsPanelHeightAtom)
 	const savedHeight = useRef(0)
 	const [isPanelVisible, setIsPanelVisible] = useState(true)
+	const [selectHotsport, setSelectHotsport] = useAtom(toggleHotspotAtom)
+
 	console.log("pid: ", project.id)
 	console.log("panoId: ", panoId)
 
@@ -35,6 +38,10 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
 			if (!v) setHeight(savedHeight.current)
 			return !v
 		})
+	}
+
+	const onHotspotButtonClick = () => {
+		setSelectHotsport(v => !v)
 	}
 
 	return (
@@ -59,7 +66,7 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
 						</Button>
 					</li>
 					<li className="flex">
-						<Button variant={"secondary"}>Hotspot</Button>
+						<Button onClick={onHotspotButtonClick} variant={"secondary"}>Hotspot</Button>
 					</li>
 					<li className="flex">
 						<Button variant={"secondary"} className="space-x-2">
