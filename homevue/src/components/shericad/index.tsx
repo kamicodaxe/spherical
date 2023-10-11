@@ -64,10 +64,7 @@ export const Shericad: React.FC<ShericadProps> = ({
 		<>
 			<ToolsPanel user={user as IUser} project={project} panoId={panoId} />
 			<div
-				className="w-full"
-				style={{
-					height
-				}}
+				className="w-full h-screen"
 			>
 				<DynamicPanoramaViewer
 					autoLoad

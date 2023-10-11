@@ -5,7 +5,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useAtom } from "jotai"
 import { toolsPanelHeightAtom } from "./atoms"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import clsx from "clsx"
 
 
 
@@ -21,13 +22,31 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
 	panoId
 }) => {
 	const [_, setHeight] = useAtom(toolsPanelHeightAtom)
+	const savedHeight = useRef(0)
+	const [isPanelVisible, setIsPanelVisible] = useState(true)
 	console.log("pid: ", project.id)
 	console.log("panoId: ", panoId)
 
 	const [shouldSaveChanges, setShouldSaveChanges] = useState(false)
 
+	const togglePanel = () => {
+		setIsPanelVisible(v => {
+			if (v) setHeight(0)
+			if (!v) setHeight(savedHeight.current)
+			return !v
+		})
+	}
+
 	return (
-		<header onLoad={e => setHeight(e.currentTarget.clientHeight)} className="p-4 bg-sky-400 text-gray-100 relative">
+		<header
+			onLoad={e => {
+				setHeight(e.currentTarget.clientHeight)
+			}}
+			className={clsx(
+				"p-4 bg-sky-400 text-gray-100 fixed inset-0 bottom-auto z-40 transition-transform duration-300",
+				!isPanelVisible && "-translate-y-[9.5rem]"
+			)}
+		>
 			<div className="md:max-w-5xl flex justify-between h-32 mx-auto relative">
 				<Link href={`/dashboard/${project.id}`} aria-label="Back to Project dashboard" className="flex items-center p-2">
 					<img src="/images/logo.jpg" alt="Logo" className="w-16" />
@@ -66,8 +85,11 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
 					</svg>
 				</button>
 				<button
+					onClick={() => togglePanel()}
 					className="absolute -bottom-10 right-8 z-50 bg-blue-900 text-4xl p-4 rounded-full">
-					<ChevronUp className=" text-4xl" />
+					{
+						isPanelVisible ? <ChevronUp className=" text-4xl" /> : <ChevronDown className=" text-4xl" />
+					}
 				</button>
 			</div>
 		</header>
