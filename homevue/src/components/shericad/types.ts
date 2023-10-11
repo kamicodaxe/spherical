@@ -4,9 +4,11 @@ export interface HotspotProps {
     pitch: number;
     yaw: number;
     type: string;
+    cssClass: string;
     text?: string;
     URL?: string;
     target?: string;
+    onClick?: () => void
 }
 
 export interface PannellumProps {
